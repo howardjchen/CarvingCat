@@ -127,6 +127,52 @@ void postorder_iterative(struct tree_node *root)
     }
 }
 
+int max_depth(struct tree_node *root)
+{
+    int maximum_depth;
+    int left_depth;
+    int right_depth;
+
+    if(root == NULL)
+        return 0;
+
+    if(root->left == NULL && root->right == NULL)
+        return 1;
+
+    if(root->left != NULL)
+        left_depth = max_depth(root->left);
+    
+    if(root->right != NULL)
+        right_depth = max_depth(root->right);
+    
+    maximum_depth = max(left_depth, right_depth);
+
+    return maximum_depth+1;
+}
+
+int min_depth(struct tree_node *root)
+{    
+    int minimum_depth;
+    int left_depth;
+    int right_depth;
+
+    if(root == NULL)
+        return 0;
+
+    if(root->left == NULL && root->right == NULL)
+        return 1;
+
+    if(root->left != NULL)
+        left_depth = min_depth(root->left);
+    
+    if(root->right != NULL)
+        right_depth = min_depth(root->right);
+    
+    minimum_depth = min(left_depth, right_depth);
+
+    return minimum_depth+1;
+}
+
 int main() {
     struct tree_node *a = new tree_node;
     struct tree_node *b = new tree_node;
@@ -158,6 +204,10 @@ int main() {
     i->left = NULL;
     i->right = NULL;
     level_order_traversal(a);
+
+    cout << "max_depth = " << max_depth(a) << endl;
+
+    cout << "min_depth = " << min_depth(a) << endl;
     
     cout << "pre_order_traversal" << endl;
     pre_order_traversal(a);
@@ -182,7 +232,6 @@ int main() {
     cout << "postorder_iterative" << endl;
     postorder_iterative(a);
     cout << endl;
-
 
     return 0;
 }
