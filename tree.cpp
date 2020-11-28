@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <queue>
+#include<stack>
 
 using namespace std;
 
@@ -44,6 +45,25 @@ void pre_order_traversal(struct tree_node *root)
     }
 }
 
+void preorder_iterative(struct tree_node *root)
+{
+    stack<struct tree_node*> stk;
+    struct tree_node *current;
+
+    stk.push(root);
+    
+    while(!stk.empty()){
+        current = stk.top();
+        stk.pop();
+        cout << current->val << " ";
+
+        if(current->right != NULL)
+            stk.push(current->right);
+        if(current->left != NULL)
+            stk.push(current->left);
+    }
+}
+
 void in_order_traversal(struct tree_node *root)
 {
     if(root != NULL){
@@ -53,12 +73,57 @@ void in_order_traversal(struct tree_node *root)
     }
 }
 
+void inorder_iterative(struct tree_node *root)
+{
+    struct tree_node *current;
+    stack<struct tree_node*> stk;
+
+    current = root;
+
+    while(!stk.empty() || current != NULL){
+
+        while(current != NULL){
+            stk.push(current);
+            current = current->left;
+        }
+
+        current = stk.top();
+        stk.pop();
+        cout << current->val << " ";
+        current = current->right;
+    } 
+}
+
 void post_order_traversal(struct tree_node *root)
 {
     if(root != NULL){
         post_order_traversal(root->left);
         post_order_traversal(root->right);
         cout << root->val << " ";
+    }
+}
+
+void postorder_iterative(struct tree_node *root)
+{
+    stack<struct tree_node*> stk;
+    struct tree_node *current;
+
+    stk.push(root);
+    
+    while(!stk.empty()){
+        current = stk.top();
+
+        if(current->right == NULL && current->left == NULL){
+            cout << current->val << " ";
+            stk.pop();
+        }
+
+        if(current->right != NULL)
+            stk.push(current->right);
+        if(current->left != NULL)
+            stk.push(current->left);
+        current->right = NULL;
+        current->left = NULL;
     }
 }
 
@@ -98,12 +163,24 @@ int main() {
     pre_order_traversal(a);
     cout << endl;
 
+    cout << "preorder_iterative" << endl;
+    preorder_iterative(a);
+    cout << endl;
+
     cout << "in_order_traversal" << endl;
     in_order_traversal(a);
     cout << endl;
 
+    cout << "inorder_iterative" << endl;
+    inorder_iterative(a);
+    cout << endl;
+
     cout << "post_order_traversal" << endl;
     post_order_traversal(a);
+    cout << endl;
+
+    cout << "postorder_iterative" << endl;
+    postorder_iterative(a);
     cout << endl;
 
 
