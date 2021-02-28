@@ -64,6 +64,25 @@ void preorder_iterative(struct tree_node *root)
     }
 }
 
+void preorder_iterative_queue(struct tree_node *root)
+{
+    queue<struct tree_node*> q;
+    struct tree_node *current;
+    
+    q.push(root);
+
+    while(!q.empty()){
+        current = q.front();
+        q.pop();
+        cout << current->val << " ";
+
+        if(current->left != NULL)
+            q.push(current->left);
+        if(current->right != NULL)
+            q.push(current->right);
+    }
+}
+
 void in_order_traversal(struct tree_node *root)
 {
     if(root != NULL){
@@ -215,6 +234,10 @@ int main() {
 
     cout << "preorder_iterative" << endl;
     preorder_iterative(a);
+    cout << endl;
+
+    cout << "preorder_iterative_queue" << endl;
+    preorder_iterative_queue(a);
     cout << endl;
 
     cout << "in_order_traversal" << endl;
